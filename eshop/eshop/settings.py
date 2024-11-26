@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,8 +26,16 @@ SECRET_KEY = "django-insecure-gz7736#hzb^e)8b1g050vj^63-$zhowc@^+9l5)r(78d-5g_#a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  "http://localhost:3002", 
+]
+
+
+# Répertoires où les fichiers médias seront stockés
+MEDIA_URL = '/media/'  # URL de base pour accéder aux fichiers
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Répertoire où les fichiers seront stockés sur le disque
 
 # Application definition
 
@@ -41,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'product.apps.ProductConfig',
      'django_filters',
+     'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -51,9 +61,10 @@ REST_FRAMEWORK = {
 
 
 MIDDLEWARE = [
+     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",

@@ -24,6 +24,7 @@ class Product(models.Model):
     stock = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='products/',null=True, blank=True) 
     
 def __str__(self):
         return self.name
